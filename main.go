@@ -22,41 +22,49 @@ var logerr = log.New(os.Stderr, "", 0)
 
 func main() {
 	flag.Parse()
+	err := run(os.Args[1:])
+	if err != nil {
+		log.Fatal(err)
+	}
+}
 
-	if len(os.Args) <= 1 {
-		logerr.Fatal(errNoCode)
+func run(args []string) error {
+	if len(os.Args) < 1 {
+		return errNoCode
 	}
 
-	code, err := strconv.Atoi(os.Args[len(os.Args)-1])
+	code, err := strconv.Atoi(args[len(args)-1])
 	if err != nil {
-		logerr.Fatal(errInvalidCode)
+		return errInvalidCode
 	}
 
 	if !isInRange(code) {
-		logerr.Fatal(errOutOfRange)
+		return errOutOfRange
 	}
 
 	if *verbose {
-		printVerbose(code)
+		return printVerbose(code)
 	} else {
-		printReason(code)
+		return printReason(code)
 	}
 }
 
-func printVerbose(code int) {
+func printVerbose(code int) error {
 	httpCode, err := getDetails(code)
 	if err != nil {
-		logerr.Fatal(explainCorpusError(err))
+		return explainCorpusError(err)
 	}
 	fmt.Printf("%d\n%s\n%s\n%s\n", httpCode.code, httpCode.reasonPhrase, httpCode.description, httpCode.moreinfoLink)
+	return nil
 }
 
-func printReason(code int) {
+func printReason(code int) error {
 	reasonPhrase, err := getReasonPhrase(code)
 	if err != nil {
-		logerr.Fatal(explainCorpusError(err))
+		return explainCorpusError(err)
 	}
 	fmt.Println(reasonPhrase)
+	return nil
 }
 
 func explainCorpusError(err error) error {
