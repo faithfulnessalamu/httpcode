@@ -4,7 +4,7 @@ Get info about http status codes right at your terminal.
 
 ## Download
 
-See [releases](https://github.com/thealamu/httpcode/releases) page for download binaries.
+See [releases](https://github.com/thealamu/httpcode/releases) page to download binaries.
 
 ## Usage
 
