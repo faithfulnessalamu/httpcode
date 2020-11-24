@@ -18,18 +18,22 @@ var (
 
 var verbose = flag.BoolP("verbose", "v", false, "display all available info about the status code")
 
+var logerr = log.New(os.Stderr, "", 0)
+
 func main() {
+	flag.Parse()
+
 	if len(os.Args) <= 1 {
-		log.Fatal(errNoCode)
+		logerr.Fatal(errNoCode)
 	}
 
 	code, err := strconv.Atoi(os.Args[1])
 	if err != nil {
-		log.Fatal(errInvalidCode)
+		logerr.Fatal(errInvalidCode)
 	}
 
 	if !isInRange(code) {
-		log.Fatal(errOutOfRange)
+		logerr.Fatal(errOutOfRange)
 	}
 
 	if *verbose {
@@ -42,7 +46,7 @@ func main() {
 func printVerbose(code int) {
 	httpCode, err := getDetails(code)
 	if err != nil {
-		log.Fatal(explainCorpusError(err))
+		logerr.Fatal(explainCorpusError(err))
 	}
 	fmt.Printf(`%d\n%s\n%s\n%s\n`, httpCode.code, httpCode.reasonPhrase, httpCode.description, httpCode.moreinfoLink)
 }
@@ -50,7 +54,7 @@ func printVerbose(code int) {
 func printReason(code int) {
 	reasonPhrase, err := getReasonPhrase(code)
 	if err != nil {
-		log.Fatal(explainCorpusError(err))
+		logerr.Fatal(explainCorpusError(err))
 	}
 	fmt.Println(reasonPhrase)
 }
