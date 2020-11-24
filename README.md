@@ -1,6 +1,10 @@
 # httpcode
 
-Get info about http status codes right at your terminal
+Get info about http status codes right at your terminal.
+
+## Download
+
+See [releases](https://github.com/thealamu/httpcode/releases) page for download binaries.
 
 ## Usage
 
