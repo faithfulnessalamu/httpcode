@@ -66,7 +66,7 @@ func explainCorpusError(err error) error {
 	return err
 }
 
-//isInRange returns true if code is in the range 100-599
+//isInRange returns true if code is in the range [100-599]
 func isInRange(code int) bool {
 	return 100 <= code && code <= 599
 }
