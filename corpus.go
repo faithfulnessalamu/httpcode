@@ -97,10 +97,12 @@ var (
 	}
 )
 
+var errCodeNotFound = errors.New("code not found")
+
 func getDetails(code int) (*httpcode, error) {
 	httpCode, ok := corpus[code]
 	if !ok {
-		return nil, errors.New("code not found")
+		return nil, errCodeNotFound
 	}
 	return httpCode, nil
 }
