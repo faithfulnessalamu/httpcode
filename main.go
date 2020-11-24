@@ -14,6 +14,7 @@ var (
 	errNoCode      = errors.New("no code given as argument")
 	errInvalidCode = errors.New("invalid code")
 	errOutOfRange  = errors.New("code is out of range")
+	errNonStandard = errors.New("this is a non-standard response, possibly custom to the server's software.")
 )
 
 var verbose = flag.BoolP("verbose", "v", false, "display all available info about the status code")
@@ -24,12 +25,12 @@ func main() {
 	flag.Parse()
 	err := run(os.Args[1:])
 	if err != nil {
-		log.Fatal(err)
+		logerr.Fatal(err)
 	}
 }
 
 func run(args []string) error {
-	if len(os.Args) < 1 {
+	if len(args) < 1 {
 		return errNoCode
 	}
 
@@ -69,7 +70,7 @@ func printReason(code int) error {
 
 func explainCorpusError(err error) error {
 	if err == errCodeNotFound {
-		return errors.New("this is a non-standard response, possibly custom to the server's software.")
+		return errNonStandard
 	}
 	return err
 }
