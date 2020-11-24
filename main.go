@@ -27,7 +27,7 @@ func main() {
 		logerr.Fatal(errNoCode)
 	}
 
-	code, err := strconv.Atoi(os.Args[1])
+	code, err := strconv.Atoi(os.Args[len(os.Args)-1])
 	if err != nil {
 		logerr.Fatal(errInvalidCode)
 	}
@@ -48,7 +48,7 @@ func printVerbose(code int) {
 	if err != nil {
 		logerr.Fatal(explainCorpusError(err))
 	}
-	fmt.Printf(`%d\n%s\n%s\n%s\n`, httpCode.code, httpCode.reasonPhrase, httpCode.description, httpCode.moreinfoLink)
+	fmt.Printf("%d\n%s\n%s\n%s\n", httpCode.code, httpCode.reasonPhrase, httpCode.description, httpCode.moreinfoLink)
 }
 
 func printReason(code int) {
