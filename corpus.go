@@ -393,6 +393,10 @@ var (
 
 var errCodeNotFound = errors.New("code not found")
 
+func getAll() map[int]*httpcode {
+	return corpus
+}
+
 func getDetails(code int) (*httpcode, error) {
 	httpCode, ok := corpus[code]
 	if !ok {

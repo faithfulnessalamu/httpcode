@@ -32,8 +32,8 @@ func TestRun(t *testing.T) {
 		{
 			"httpcode",
 			[]string{},
-			true,
-			errNoCode,
+			false,
+			nil,
 		},
 		{
 			"httpcode -v 1000",
