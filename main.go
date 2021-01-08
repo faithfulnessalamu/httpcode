@@ -22,7 +22,11 @@ var verbose = flag.BoolP("verbose", "v", false, "display all available info abou
 var logerr = log.New(os.Stderr, "", 0)
 
 func main() {
+	flag.Usage = func() {
+		print(usage)
+	}
 	flag.Parse()
+
 	err := run(os.Args[1:])
 	if err != nil {
 		logerr.Fatal(err)
@@ -79,3 +83,18 @@ func explainCorpusError(err error) error {
 func isInRange(code int) bool {
 	return 100 <= code && code <= 599
 }
+
+var usage = `
+Usage: httpcode [code]
+
+Available options:
+	-v, --verbose		show full information about a HTTP code
+	-h, --help		show this help
+
+Examples:
+	show info about HTTP code 200:
+	$ httpcode 200
+
+	show verbose info about HTTP code 200:
+	$ httpcode -v 200
+`
