@@ -1,16 +1,10 @@
-.PHONY: all linux windows mac
+.PHONY: build
 
-all: linux windows mac
-
-linux: clean
-	GOOS=linux GOARCH=amd64 go build -o ./build/httpcode-linux-x86_64
-
-windows: clean
-	GOOS=windows GOARCH=amd64 go build -o ./build/httpcode-win-x86_64.exe
-
-mac: clean
-	GOOS=darwin GOARCH=amd64 go build -o ./build/httpcode-mac-x86_64
+build: clean
+	mkdir build && \
+	GOOS=darwin GOARCH=arm64 go build -o ./build/httpcode-mac-arm64
+	cd ./build/ && \
+	tar -czvf httpcode-mac-arm64.tar.gz httpcode-mac-arm64
 
 clean: 
 	rm -rf ./build
-	mkdir build
